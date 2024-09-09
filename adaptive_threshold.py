@@ -61,3 +61,39 @@ def extract_text(image):
     # OCR the image using Tesseract
     text = pytesseract.image_to_string(image)
     return text
+
+
+def summarize_receipt(text):
+    # Example of basic parsing logic (can be expanded)
+    lines = text.split("\n")
+    items = []
+    subtotal = 0
+    for line in lines:
+        if line.startswith("#"):  # Item line starts with #
+            item_data = line.split("\t")  # Example: item name, quantity, price
+            items.append(item_data)
+        if "Sub Total" in line:
+            subtotal = float(line.split()[-1])
+
+    summary = {
+        "items": items,
+        "subtotal": subtotal,
+    }
+    return summary
+
+def main(image_path):
+    # Process the image
+    processed_image = preprocess_image(image_path)
+
+    # Extract text
+    text = extract_text(processed_image)
+    print("Extracted Text:\n", text)
+
+    # Summarize the receipt
+    summary = summarize_receipt(text)
+    print("\nReceipt Summary:")
+    print("Subtotal:", summary['subtotal'])
+
+if _name_ == "_main_":
+    image_path = 'Recept-I.png'
+    main(image_path)
