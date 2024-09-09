@@ -1,5 +1,6 @@
 from load_image import process_images
 from custom_preprocessing import apply_preprocessing
+from ocr_methods import apply_ocr
 import cv2
 
 if __name__ == "__main__":
@@ -12,3 +13,11 @@ if __name__ == "__main__":
 
         # Apply custom preprocessing based on image-specific configuration
         apply_preprocessing(selected_image_path, img)
+
+        # After preprocessing, apply OCR to the processed image
+        ocr_text = apply_ocr(img)
+
+        # Print the extracted OCR text
+        print("Extracted Text:")
+        print(ocr_text)
+

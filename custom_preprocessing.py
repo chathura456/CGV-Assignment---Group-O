@@ -9,8 +9,9 @@ PREPROCESSING_CONFIG = {
     "Recept-I.png": {
         "operations": [
             {"name": "grayscale", "function": grayscale_image},
-            {"name": "binarization", "function": binarize_image, "args": {"threshold": 100}},
-            {"name": "sharpening", "function": sharpen_image}
+            {"name": "binarization", "function": binarize_image, "args": {"threshold": 120}},
+            {"name": "noise removal", "function": remove_noise, "args": {"ksize": (3, 3)}},
+            {"name": "sharpening", "function": sharpen_image}  # Retain sharpening to improve text edges
         ]
     },
      "Recept-II.png": {
@@ -18,7 +19,7 @@ PREPROCESSING_CONFIG = {
             {"name": "grayscale", "function": grayscale_image},
             {"name": "sharpening", "function": sharpen_image},  # Add sharpening to enhance edges
             {"name": "edge detection", "function": edge_detection},
-            {"name": "morphological operation", "function": morphological_operation, "args": {"operation": "dilate", "ksize": (2, 2), "iterations": 1}},  # Smaller kernel for dilation
+            {"name": "morphological operation", "function": morphological_operation, "args": {"operation": "dilate", "ksize": (2,2), "iterations": 1}},  # Smaller kernel for dilation
             {"name": "noise removal", "function": remove_noise}  # Remove noise for clarity
         ]
     },
@@ -69,7 +70,8 @@ def apply_preprocessing(selected_image_path, img):
         func = operation["function"]
         args = operation.get("args", {})
         processed_img = func(img, **args) if args else func(img)
-        processed_images.append((operation["name"], processed_img))
+        processed_images.append(("Processed Image", processed_img))
+
 
     # Only keep the original and the final processed image
     show_processed_images([processed_images[0], processed_images[-1]])
