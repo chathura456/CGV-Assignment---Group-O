@@ -10,15 +10,42 @@ PREPROCESSING_CONFIG = {
         "operations": [
             {"name": "grayscale", "function": grayscale_image},
             {"name": "binarization", "function": binarize_image, "args": {"threshold": 100}},
+            {"name": "sharpening", "function": sharpen_image}
         ]
     },
-    "Recept-II.png": {
+     "Recept-II.png": {
         "operations": [
             {"name": "grayscale", "function": grayscale_image},
+            {"name": "sharpening", "function": sharpen_image},  # Add sharpening to enhance edges
+            {"name": "edge detection", "function": edge_detection},
+            {"name": "morphological operation", "function": morphological_operation, "args": {"operation": "dilate", "ksize": (2, 2), "iterations": 1}},  # Smaller kernel for dilation
+            {"name": "noise removal", "function": remove_noise}  # Remove noise for clarity
+        ]
+    },
+    "Recept-III.png": {
+        "operations": [
+            {"name": "grayscale", "function": grayscale_image},
+            {"name": "binarization", "function": binarize_image, "args": {"threshold": 150}},
+            {"name": "noise removal", "function": remove_noise}
+        ]
+    },
+    "Recept-IV.png": {
+        "operations": [
+            {"name": "grayscale", "function": grayscale_image},
+            {"name": "binarization", "function": binarize_image, "args": {"threshold": 120}},
+            {"name": "sharpening", "function": sharpen_image},
+            {"name": "morphological operation", "function": morphological_operation, "args": {"operation": "dilate"}}
+        ]
+    },
+    "Recepts.png": {
+        "operations": [
+            {"name": "grayscale", "function": grayscale_image},
+            {"name": "binarization", "function": binarize_image, "args": {"threshold": 110}},
+            {"name": "sharpening", "function": sharpen_image},
+            {"name": "morphological operation", "function": morphological_operation, "args": {"operation": "dilate"}},
             {"name": "edge detection", "function": edge_detection}
         ]
     }
-    # Add more image-specific configurations as needed
 }
 
 
