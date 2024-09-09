@@ -26,17 +26,6 @@ def select_image(images):
             print("Please enter a valid number.")
 
 
-def show_image(image_path):
-    """Display the selected image."""
-    img = cv2.imread(image_path)
-    if img is None:
-        print("Error loading image.")
-        return
-    cv2.imshow("Selected Image", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
 def process_images():
     """Process user input to list, select, and display images."""
     images = list_images()
@@ -48,5 +37,4 @@ def process_images():
 
     selected_image = select_image(images)
     selected_image_path = os.path.join("./img", selected_image)
-    show_image(selected_image_path)
     return selected_image_path

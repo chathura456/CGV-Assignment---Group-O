@@ -34,7 +34,7 @@ def apply_preprocessing(selected_image_path, img):
         print(f"No custom preprocessing found for {image_name}")
         return
 
-    # Display the original image
+    # Store original image
     processed_images = [("Original", img)]
 
     # Apply each operation defined in the config
@@ -44,12 +44,12 @@ def apply_preprocessing(selected_image_path, img):
         processed_img = func(img, **args) if args else func(img)
         processed_images.append((operation["name"], processed_img))
 
-    # Show the original and processed images side by side
-    show_processed_images(processed_images)
+    # Only keep the original and the final processed image
+    show_processed_images([processed_images[0], processed_images[-1]])
 
 
 def show_processed_images(images):
-    """Display the original and processed images in full screen with labels."""
+    """Display the original and final processed image in one window with labels."""
     labeled_images = []
 
     # Ensure all images have the same number of dimensions and add labels
@@ -60,17 +60,13 @@ def show_processed_images(images):
         # Add label to the image
         cv2.putText(img, label, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
-        # Resize the image for uniform display
-        labeled_images.append(cv2.resize(img, (400, 400)))
+        # Append image without resizing
+        labeled_images.append(img)
 
     # Concatenate images horizontally for side-by-side display
     concatenated_image = np.hstack(labeled_images)
 
-    # Create a full-screen window to display the images
-    cv2.namedWindow("Processed Images", cv2.WND_PROP_FULLSCREEN)
-    cv2.setWindowProperty("Processed Images", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-
-    # Display the concatenated image
+    # Display the concatenated image in one window
     cv2.imshow("Processed Images", concatenated_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
