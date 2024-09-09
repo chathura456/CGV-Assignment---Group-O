@@ -23,3 +23,7 @@ def canny_edge_detection(image_path):
     plt.title('Canny Edge Detection')
     plt.axis('off')
     plt.show()
+
+    if __name__ == "__main__":
+        # use recept name
+        canny_edge_detection('img/Recepts.png')
