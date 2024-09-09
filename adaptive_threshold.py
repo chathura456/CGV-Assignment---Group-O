@@ -39,3 +39,25 @@ def preprocess_image(image_path):
     cv2.destroyAllWindows()
 
     return adaptive_thresh
+
+def preprocess_image(image_path):
+    # (Code from the first two commits remains the same)
+
+    # Apply Adaptive Thresholding
+    adaptive_thresh = cv2.adaptiveThreshold(
+        gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2
+    )
+    cv2.imshow('Adaptive Threshold Image', adaptive_thresh)
+
+    # Optional: Denoise or blur the image if needed
+    blurred = cv2.GaussianBlur(adaptive_thresh, (5, 5), 0)
+    cv2.imshow('Blurred Image', blurred)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    return blurred
+
+def extract_text(image):
+    # OCR the image using Tesseract
+    text = pytesseract.image_to_string(image)
+    return text
